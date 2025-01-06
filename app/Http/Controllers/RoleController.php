@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use App\Models\Operator;
 use App\Models\role_operators;
-use Validator;
+use Validator; 
 
 //Importing laravel-permission models
 
