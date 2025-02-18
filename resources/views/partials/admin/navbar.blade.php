@@ -38,7 +38,7 @@
                         <i class="fas fa-sort-up"></i>
                     </a>
                     @endcan
-                    <div class="collapse {{ (Request::route()->getName() == 'management.user' || Request::route()->getName() == 'management.revShare' || Request::route()->getName() == 'management.companyAssign' || Request::route()->getName() == 'management.company' || Request::route()->getName() == 'management.currency' || Request::route()->getName() == 'management.operator' || Request::route()->getName() == 'project.management' || Request::route()->getName() == 'users' ) || Request::route()->getName() == 'students.index'  ? 'show' : '' }}" id="navbar-getting-started-management">
+                    <div class="collapse {{ (Request::route()->getName() == 'management.user' || Request::route()->getName() == 'management.revShare' || Request::route()->getName() == 'management.companyAssign' || Request::route()->getName() == 'management.company' || Request::route()->getName() == 'management.currency' || Request::route()->getName() == 'management.operator' || Request::route()->getName() == 'project.management' || Request::route()->getName() == 'users' ) || Request::route()->getName() == 'students.index'  ? 'show' : '' || Request::route()->getName() == 'tutors.index'  ? 'show' : '' }}" id="navbar-getting-started-management">
                         <ul class="nav flex-column submenu-ul">
                           
                             @if(Gate::check('Manage Users') || Gate::check('Manage Clients') || Gate::check('Manage Roles') || Gate::check('Manage Permissions'))
@@ -53,6 +53,11 @@
                             <li class="nav-item  {{ Request::route()->getName() == 'students.index' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{url('students')}}">
                                     {{__(' Students Management')}}
+                                </a>
+                            </li>
+                            <li class="nav-item  {{ Request::route()->getName() == 'tutors.index' ? 'active' : '' }}">
+                                <a class="nav-link" href="{{url('tutors')}}">
+                                    {{__(' Tutors Management')}}
                                 </a>
                             </li>
                             @endcan

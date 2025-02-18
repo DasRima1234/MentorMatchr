@@ -56,6 +56,7 @@ Route::post('/userCreateFromCsv', ['as' => 'userCreateFromCsv', 'uses' => 'UserC
 Route::post('/profile/userpassword', ['as' => 'update.userpassword', 'uses' => 'UserController@userpassword',])->middleware(['auth', 'XSS',]);
 
 Route::resource('students', 'StudentController');
+Route::resource('tutors', 'TutorController');
 
 Route::resource('roles', 'RoleController');
 Route::prefix('roles')->middleware(['auth', 'XSS',])->group(function () {
