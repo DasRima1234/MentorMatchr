@@ -212,7 +212,7 @@ table tbody tr td {
     color: #fff;
 }
 
-.edit-icon i, .delete-icon i {
+.edit-icon i, .delete-icon i, .view-icon i {
     color: #fff;
     font-size: 10px;
     line-height: 25px;
@@ -231,6 +231,15 @@ table tbody tr td {
 .edit-icon {
     margin-right: 6px;
     background: #0f5ef7;
+}
+.view-icon {
+    margin-right: 6px;
+    background: #2c8e34;
+    border-radius: 6px;
+    width: 25px;
+    line-height: 25px;
+    height: 25px;
+    text-align: center;
 }
 
 .table-responsive {
@@ -394,7 +403,7 @@ table {
 }
 
 .navbar-nav .nav-link {
-    color: #515962;
+    color: #a4a4a4;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {

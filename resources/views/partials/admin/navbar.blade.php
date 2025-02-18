@@ -1,8 +1,10 @@
 <div class="sidenav custom-sidenav" id="sidenav-main">
     <div class="sidenav-header d-flex align-items-center">
         <a class="navbar-brand" href="{{route('home')}}">
-            <img src="{{asset('assets/images/logonew.png')}}" alt="{{ config('app.name', 'LeadGo') }}" class="navbar-brand-img" style="height: 50px;">
+            <img src="{{ asset('assets/images/mentor-logo.png') }}" alt="{{ config('app.name', 'LeadGo') }}" class="navbar-brand-img" style="height: 50px;">
+            <span style="color: #cf6219; font-weight:700;">Mentor Matchr</span>
         </a>
+        
         <div class="ml-auto">
             <div class="sidenav-toggler sidenav-toggler-dark d-md-none" data-action="sidenav-unpin"         data-target="#sidenav-main">
                 <div class="sidenav-toggler-inner">
@@ -36,7 +38,7 @@
                         <i class="fas fa-sort-up"></i>
                     </a>
                     @endcan
-                    <div class="collapse {{ (Request::route()->getName() == 'management.user' || Request::route()->getName() == 'management.revShare' || Request::route()->getName() == 'management.companyAssign' || Request::route()->getName() == 'management.company' || Request::route()->getName() == 'management.currency' || Request::route()->getName() == 'management.operator' || Request::route()->getName() == 'project.management' || Request::route()->getName() == 'users' )  ? 'show' : '' }}" id="navbar-getting-started-management">
+                    <div class="collapse {{ (Request::route()->getName() == 'management.user' || Request::route()->getName() == 'management.revShare' || Request::route()->getName() == 'management.companyAssign' || Request::route()->getName() == 'management.company' || Request::route()->getName() == 'management.currency' || Request::route()->getName() == 'management.operator' || Request::route()->getName() == 'project.management' || Request::route()->getName() == 'users' ) || Request::route()->getName() == 'students.index'  ? 'show' : '' }}" id="navbar-getting-started-management">
                         <ul class="nav flex-column submenu-ul">
                           
                             @if(Gate::check('Manage Users') || Gate::check('Manage Clients') || Gate::check('Manage Roles') || Gate::check('Manage Permissions'))
@@ -47,7 +49,8 @@
                                     {{__(' Users Management')}}
                                 </a>
                             </li>
-                            <li class="nav-item  {{ Request::route()->getName() == 'students' ? 'active' : '' }}">
+                            {{-- {{dd(Request::route()->getName())}} --}}
+                            <li class="nav-item  {{ Request::route()->getName() == 'students.index' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{url('students')}}">
                                     {{__(' Students Management')}}
                                 </a>
