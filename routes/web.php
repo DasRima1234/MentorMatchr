@@ -2,7 +2,11 @@
 
 // use App\Http\Controllers\BranchController;
 
+use App\Http\Controllers\ClassScheduleController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Dashboard_V2_Controller;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TutorController;
@@ -57,6 +61,11 @@ Route::post('/profile/userpassword', ['as' => 'update.userpassword', 'uses' => '
 
 Route::resource('students', 'StudentController');
 Route::resource('tutors', 'TutorController');
+Route::resource('courses', 'CourseController');
+Route::resource('class_schedules', 'ClassScheduleController');
+Route::resource('enrollments', 'EnrollmentController');
+Route::resource('payments', 'PaymentController');
+
 
 Route::resource('roles', 'RoleController');
 Route::prefix('roles')->middleware(['auth', 'XSS',])->group(function () {
