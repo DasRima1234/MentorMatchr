@@ -11,14 +11,29 @@ class Student extends Model
     use HasFactory,Notifiable;
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'middle_name',
+        'last_name',
         'email',
-        'password',
-        'phone_number',
+        'city',
+        'state',
+        'country',
+        'pincode',
+        'phone',
+        'guardian_name',
+        'guardian_phone',
+        'dob',
+        'gender',
         'address',
-        'date_of_birth',
-        'status',
+        'education_level',
+        'subjects', 
+        'achievements', 
+        'school_name',
+        'resources',
+        'skills',
+        'interests',
     ];
+    
 
     protected $hidden = [
         'password',

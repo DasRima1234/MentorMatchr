@@ -217,6 +217,8 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.html5.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.26.0/tableExport.min.js"></script>
+<!-- jQuery -->
+
 
 @include('Chatify::layouts.footerLinks')
 @if(Utility::getValByName('gdpr_cookie') == 'on')
@@ -841,6 +843,13 @@
         $(".loader-bg").fadeOut('slow')
     });
 
+</script>
+<script>
+    $(document).ready(function() {
+        $(".searchable_dropdown_box").select2({
+            width: 'resolve'
+        });
+    });
 </script>
 @stack('scripts')
 

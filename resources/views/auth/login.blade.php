@@ -21,7 +21,7 @@
 @section('content')
     <div class="login-form">
         <a class="navbar-brand" href="#">
-            <img src="http://127.0.0.1:8000/assets/images/mentor-logo.png" alt="Laravel" class="navbar-brand-img"
+            <img src="{{ asset('assets/images/mentor-logo.png') }}" alt="Laravel" class="navbar-brand-img"
                 style="
             height: 80px;];
             width: 80px;
