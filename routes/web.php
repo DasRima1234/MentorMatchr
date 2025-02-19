@@ -6,6 +6,9 @@ use App\Http\Controllers\ClassScheduleController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Dashboard_V2_Controller;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\GradeController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\StudentController;
@@ -65,7 +68,9 @@ Route::resource('courses', 'CourseController');
 Route::resource('class_schedules', 'ClassScheduleController');
 Route::resource('enrollments', 'EnrollmentController');
 Route::resource('payments', 'PaymentController');
-
+Route::resource('exams', 'ExamController');
+Route::resource('grades', 'GradeController');
+Route::resource('messages', 'MessageController')->middleware('auth');
 
 Route::resource('roles', 'RoleController');
 Route::prefix('roles')->middleware(['auth', 'XSS',])->group(function () {
