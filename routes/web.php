@@ -11,8 +11,10 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TutorController;
+use App\Http\Controllers\AttendanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,15 +64,32 @@ Route::delete('/users/{id}', ['as' => 'users.destroy', 'uses' => 'UserController
 Route::post('/userCreateFromCsv', ['as' => 'userCreateFromCsv', 'uses' => 'UserController@userCreateFromCsv',])->middleware(['auth', 'XSS',]);
 Route::post('/profile/userpassword', ['as' => 'update.userpassword', 'uses' => 'UserController@userpassword',])->middleware(['auth', 'XSS',]);
 
-Route::resource('students', 'StudentController');
-Route::resource('tutors', 'TutorController');
-Route::resource('courses', 'CourseController');
-Route::resource('class_schedules', 'ClassScheduleController');
-Route::resource('enrollments', 'EnrollmentController');
-Route::resource('payments', 'PaymentController');
-Route::resource('exams', 'ExamController');
-Route::resource('grades', 'GradeController');
-Route::resource('messages', 'MessageController')->middleware('auth');
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::resource('students', 'StudentController');
+    Route::resource('tutors', 'TutorController');
+    Route::resource('courses', 'CourseController');
+    Route::resource('class_schedules', 'ClassScheduleController');
+    Route::resource('enrollments', 'EnrollmentController');
+    Route::resource('payments', 'PaymentController');
+    Route::resource('exams', 'ExamController');
+    Route::resource('grades', 'GradeController');
+    Route::resource('reports', 'ReportController');
+    Route::get('reports/{id}/pdf', ['ReportController', 'generatePDF'])->name('reports.pdf');
+});
+Route::middleware(['auth', 'role:Tutor'])->group(function () {
+    Route::resource('attendances', 'AttendanceController');
+    Route::resource('messages', 'MessageController');
+});
+Route::middleware(['auth', 'role:Student'])->group(function () {
+    Route::get('/dashboard', ['Dashboard_V2_Controller', 'index'])->name('dashboard');
+    Route::get('reports/{id}', ['ReportController', 'show'])->name('reports.show');
+    Route::resource('messages', 'MessageController');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('messages', 'MessageController');
+});
+
 
 Route::resource('roles', 'RoleController');
 Route::prefix('roles')->middleware(['auth', 'XSS',])->group(function () {
@@ -91,9 +110,9 @@ Route::prefix('dashboard')->middleware(['auth', 'XSS',])->group(function () {
     Route::post('/getmixedgraphaxesdata', 'Controller@Getmixedgraphaxesdata');
     Route::post('/getmixedgraphdata', 'Controller@Getmixedgraphdata');
 });
-// Route::get('/dashboard', [Dashboard_V2_Controller::class, 'index'])->name('dashboard');
+// Route::get('/dashboard', [Dashboard_V2_Controller, 'index'])->name('dashboard');
 
-// Route::controller(Dashboard_V2_Controller::class)->group(function () {
+// Route::controller(Dashboard_V2_Controller)->group(function () {
 //     Route::get('admin/dashboard', 'AdminAccess')->name('admin.dashboard');
     
 // });
@@ -160,8 +179,8 @@ Route::get('/permission-clear', function () {
 });
 
 // web.php (Routes)
-Route::get('student/register', [StudentController::class, 'create'])->name('student.register');
-Route::get('tutor/register', [TutorController::class, 'create'])->name('tutor.register');
-Route::get('/register/tutor', [RegisterController::class, 'showRegistrationForm']);
-Route::get('/register/student', [RegisterController::class, 'showRegistrationForm']);
-Route::post('/register', [RegisterController::class, 'register']);
+Route::get('student/register', [StudentController, 'create'])->name('student.register');
+Route::get('tutor/register', [TutorController, 'create'])->name('tutor.register');
+Route::get('/register/tutor', [RegisterController, 'showRegistrationForm']);
+Route::get('/register/student', [RegisterController, 'showRegistrationForm']);
+Route::post('/register', [RegisterController, 'register']);

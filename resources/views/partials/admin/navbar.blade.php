@@ -61,6 +61,11 @@
                             'class_schedules.index',
                             'enrollments.index',
                             'payments.index',
+                            'messages.index',
+                            'attendances.index',
+                            'exams.index',
+                            'grades.index',
+                            'reports.index',
                         ])
                             ? 'show'
                             : '' }}"
@@ -76,45 +81,75 @@
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'users' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ route('users') }}">
-                                                    {{ __(' Users Management') }}
+                                                    {{ __('Users Management') }}
                                                 </a>
                                             </li>
                                             {{-- {{dd(Request::route()->getName())}} --}}
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'students.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('students') }}">
-                                                    {{ __(' Students Management') }}
+                                                    {{ __('Students Management') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'tutors.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('tutors') }}">
-                                                    {{ __(' Tutors Management') }}
+                                                    {{ __('Tutors Management') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'courses.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('courses') }}">
-                                                    {{ __(' Course Management') }}
+                                                    {{ __('Course Management') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'class_schedules.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('class_schedules') }}">
-                                                    {{ __(' Class Management') }}
+                                                    {{ __('Class Management') }}
                                                 </a>
                                             </li>
                                             
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'enrollments.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('enrollments') }}">
-                                                    {{ __(' Enrollment Management') }}
+                                                    {{ __('Enrollment Management') }}
+                                                </a>
+                                            </li>
+                                            <li
+                                                class="nav-item  {{ Request::route()->getName() == 'attendances.index' ? 'active' : '' }}">
+                                                <a class="nav-link" href="{{ url('attendances') }}">
+                                                    {{ __('Attendance Management') }}
+                                                </a>
+                                            </li>
+                                            <li
+                                                class="nav-item  {{ Request::route()->getName() == 'exams.index' ? 'active' : '' }}">
+                                                <a class="nav-link" href="{{ url('exams') }}">
+                                                    {{ __('Exam Management') }}
+                                                </a>
+                                            </li>
+                                            <li
+                                                class="nav-item  {{ Request::route()->getName() == 'grades.index' ? 'active' : '' }}">
+                                                <a class="nav-link" href="{{ url('grades') }}">
+                                                    {{ __('Grade Management') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'payments.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('payments') }}">
-                                                    {{ __(' Payment Management') }}
+                                                    {{ __('Payment Management') }}
+                                                </a>
+                                            </li>
+                                            <li
+                                                class="nav-item  {{ Request::route()->getName() == 'messages.index' ? 'active' : '' }}">
+                                                <a class="nav-link" href="{{ url('messages') }}">
+                                                    {{ __('Message Management') }}
+                                                </a>
+                                            </li>
+                                            <li
+                                                class="nav-item  {{ Request::route()->getName() == 'reports.index' ? 'active' : '' }}">
+                                                <a class="nav-link" href="{{ url('reports') }}">
+                                                    {{ __('Reports Management') }}
                                                 </a>
                                             </li>
                                         @endcan
