@@ -56,7 +56,7 @@
 
 
 
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label class="form-control-label" for="role">{{ __('Select Merchant') }}</label>
             <div class="row">
                 @foreach($merchants as $merchant)
@@ -70,7 +70,7 @@
                 </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
 
 
         @include('custom_fields.formBuilder')

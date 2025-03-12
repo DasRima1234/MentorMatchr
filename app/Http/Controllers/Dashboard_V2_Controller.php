@@ -15,38 +15,39 @@ use App\Models\User;
 
 class Dashboard_V2_Controller extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     if (!Auth::check()) {
-    //         return redirect()->route('login')->with('error', 'You must be logged in.');
-    //     }
-
-    //     $user = Auth::user();
-    //     // dd($user);
-    //     // Check the user's role
-    //     $userRoles = Auth::user()->getRoleNames();
-    //     // dd($userRoles);
-        
-    //     if ($userRoles->contains('Admin') || $userRoles->contains('Owner')) {
-    //         return $this->adminDashboard();
-        
-    //     } elseif ($userRoles->contains('Student')) {
-    //         return $this->studentDashboard();
-    //     } elseif ($userRoles->contains('Tutor')) {
-    //         return $this->tutorDashboard();
-    //     } else {
-    //         abort(403, 'Unauthorized Access');
-    //     }
-    // }
-
     public function index(Request $request)
     {
-       if(Auth::check()){
-        return view('admin.country_dashboard');
-       } else {
-            return redirect()->route('login');
+        // dd(4354546);
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You must be logged in.');
+        }
+
+        $user = Auth::user();
+        // dd($user);
+        // Check the user's role
+        $userRoles = Auth::user()->getRoleNames();
+        // dd($userRoles);
+        
+        if ($userRoles->contains('Admin') || $userRoles->contains('Owner')) {
+            return $this->adminDashboard();
+        
+        } elseif ($userRoles->contains('Student')) {
+            return $this->studentDashboard();
+        } elseif ($userRoles->contains('Tutor')) {
+            return $this->tutorDashboard();
+        } else {
+            return $this->adminDashboard();
         }
     }
+
+    // public function index(Request $request)
+    // {
+    //    if(Auth::check()){
+    //     return view('admin.country_dashboard');
+    //    } else {
+    //         return redirect()->route('login');
+    //     }
+    // }
     /**
      * Admin Dashboard
      */
