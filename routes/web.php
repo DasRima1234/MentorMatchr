@@ -15,6 +15,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TutorController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\StudentTutorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,6 +76,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('grades', 'GradeController');
     Route::resource('reports', 'ReportController');
     Route::get('reports/{id}/pdf', ['ReportController', 'generatePDF'])->name('reports.pdf');
+    Route::resource('student-tutors', 'StudentTutorController');
 });
 Route::middleware(['auth', 'role:Tutor'])->group(function () {
     Route::resource('attendances', 'AttendanceController');
@@ -82,7 +84,7 @@ Route::middleware(['auth', 'role:Tutor'])->group(function () {
 });
 Route::middleware(['auth', 'role:Student'])->group(function () {
     Route::get('/dashboard', ['Dashboard_V2_Controller', 'index'])->name('dashboard');
-    Route::get('reports/{id}', ['ReportController', 'show'])->name('reports.show');
+    // Route::get('reports/{id}', ['ReportController', 'show'])->name('reports.show');
     Route::resource('messages', 'MessageController');
 });
 
@@ -178,9 +180,3 @@ Route::get('/permission-clear', function () {
     return 'Permission cache cleared successfully';
 });
 
-// web.php (Routes)
-Route::get('student/register', [StudentController, 'create'])->name('student.register');
-Route::get('tutor/register', [TutorController, 'create'])->name('tutor.register');
-Route::get('/register/tutor', [RegisterController, 'showRegistrationForm']);
-Route::get('/register/student', [RegisterController, 'showRegistrationForm']);
-Route::post('/register', [RegisterController, 'register']);

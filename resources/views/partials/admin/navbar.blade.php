@@ -66,6 +66,7 @@
                             'exams.index',
                             'grades.index',
                             'reports.index',
+                            'student-tutors.index'
                         ])
                             ? 'show'
                             : '' }}"
@@ -95,6 +96,12 @@
                                                 class="nav-item  {{ Request::route()->getName() == 'tutors.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('tutors') }}">
                                                     {{ __('Tutors Management') }}
+                                                </a>
+                                            </li>
+                                            <li
+                                                class="nav-item  {{ Request::route()->getName() == 'student-tutors.index' ? 'active' : '' }}">
+                                                <a class="nav-link" href="{{ url('student-tutors') }}">
+                                                    {{ __('Student-Tutors Management') }}
                                                 </a>
                                             </li>
                                             <li

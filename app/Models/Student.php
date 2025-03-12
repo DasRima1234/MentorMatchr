@@ -43,4 +43,14 @@ class Student extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tutors()
+    {
+        return $this->belongsToMany(Tutor::class, 'student_tutor');
+    }
 }

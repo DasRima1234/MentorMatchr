@@ -17,5 +17,13 @@ class Tutor extends Model
             'availability' => 'array',
             'dob' => 'date',
         ];
-
+        public function user()
+        {
+            return $this->belongsTo(User::class);
+        }
+    
+        public function students()
+        {
+            return $this->belongsToMany(Student::class, 'student_tutor');
+        }
 }
