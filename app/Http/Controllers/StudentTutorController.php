@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Tutor;
@@ -16,8 +17,9 @@ class StudentTutorController extends Controller
         $students = Student::all();
         $tutors = Tutor::all();
         $assignments = Tutor::with('students')->get(); // Get all tutor-student assignments
+        $courses = Course::all();
 
-        return view('student-tutor.index', compact('students', 'tutors', 'assignments'));
+        return view('student-tutor.index', compact('students', 'tutors', 'assignments', 'courses'));
     }
 
     /**
@@ -27,7 +29,9 @@ class StudentTutorController extends Controller
     {
         $students = Student::all();
         $tutors = Tutor::all();
-        return view('admin.assign-student-tutor', compact('students', 'tutors'));
+        $courses = Course::all();
+
+        return view('admin.assign-student-tutor', compact('students', 'tutors', 'courses'));
     }
 
     /**

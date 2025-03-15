@@ -59,7 +59,21 @@ class Dashboard_V2_Controller extends Controller
         $totalEnrollments = Enrollment::count();
         $totalPayments = Payment::sum('amount');
         $totalAttendances = Attendance::count();
+        $recentPayments = Payment::latest()->take(5)->get(); // Fetch 5 recent payments
 
+        $rawEnrollmentData = Enrollment::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        ->whereYear('created_at', now()->year)
+        ->groupBy('month')
+        ->pluck('count', 'month')
+        ->toArray();
+
+        // Ensure all months are included (fill missing months with 0)
+        $months = array_fill(1, 12, 0);
+        foreach ($rawEnrollmentData as $month => $count) {
+            $months[$month] = $count;
+        }
+            // ->toArray();
+        // dd($months);
         $monthlyEnrollments = Enrollment::whereYear('created_at', Carbon::now()->year)
             ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
             ->groupBy('month')
@@ -72,7 +86,7 @@ class Dashboard_V2_Controller extends Controller
 
         return view('admin.country_dashboard', compact(
             'totalStudents', 'totalTutors', 'totalCourses', 'totalEnrollments', 
-            'totalPayments', 'totalAttendances', 'monthlyEnrollments', 'monthlyRevenue'
+            'totalPayments', 'totalAttendances', 'monthlyEnrollments', 'monthlyRevenue','months','recentPayments'
         ));
     }
 

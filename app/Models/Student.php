@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Student extends Model
 {
-    use HasFactory,Notifiable;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'first_name',
@@ -26,14 +26,14 @@ class Student extends Model
         'gender',
         'address',
         'education_level',
-        'subjects', 
-        'achievements', 
+        'subjects',
+        'achievements',
         'school_name',
         'resources',
         'skills',
         'interests',
     ];
-    
+
 
     protected $hidden = [
         'password',
@@ -53,4 +53,11 @@ class Student extends Model
     {
         return $this->belongsToMany(Tutor::class, 'student_tutor');
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'enrollments');
+    }
+
+    
 }

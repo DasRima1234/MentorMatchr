@@ -1,87 +1,112 @@
 @extends('layouts.admin')
 
 @section('title')
-  {{ __('Dashboard') }}
+    {{ __('Admin Dashboard') }}
 @endsection
 
 @section('content')
-  <div class="page-content">
-    <div class="page-title" style="margin-bottom:25px">
-      <div class="row justify-content-between align-items-center">
-        <div class="col-xl-4 col-lg-4 col-md-4 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-          <div class="d-inline-block">
-            <h5 class="h4 d-inline-block font-weight-400 mb-0"><b>Dashboard</b></h5><br>
-          </div>
+<div class="row">
+    <!-- Total Students -->
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h4>{{ $totalStudents }}</h4>
+                <p class="text-muted">{{ __('Total Students') }}</p>
+                <a href="{{ route('students.index') }}" class="btn btn-primary btn-sm">Manage Students</a>
+            </div>
         </div>
-      </div>
     </div>
 
-    <!-- Banner Section -->
-    {{-- <div class="swiper-container">
-      <div class="swiper-wrapper">
-        @foreach($banners as $banner)
-          <div class="swiper-slide">
-            <img src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->name }}">
-          </div>
-        @endforeach
-      </div>
+    <!-- Total Tutors -->
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h4>{{ $totalTutors }}</h4>
+                <p class="text-muted">{{ __('Total Tutors') }}</p>
+                <a href="{{ route('tutors.index') }}" class="btn btn-primary btn-sm">Manage Tutors</a>
+            </div>
+        </div>
+    </div>
 
-      <!-- Pagination, Navigation, Scrollbar -->
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-scrollbar"></div>
-    </div> --}}
-  </div>
+    <!-- Total Courses -->
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h4>{{ $totalCourses }}</h4>
+                <p class="text-muted">{{ __('Total Courses') }}</p>
+                <a href="{{ route('courses.index') }}" class="btn btn-primary btn-sm">Manage Courses</a>
+            </div>
+        </div>
+    </div>
 
-  <!-- Add Swiper CSS and JS here -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Total Enrollments -->
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h4>{{ $totalEnrollments }}</h4>
+                <p class="text-muted">{{ __('Total Enrollments') }}</p>
+                <a href="{{ route('enrollments.index') }}" class="btn btn-primary btn-sm">Manage Enrollments</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 1,  // One slide at a time
-        spaceBetween: 10,   // Space between slides
-        loop: true,         // Infinite looping
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        scrollbar: {
-          el: '.swiper-scrollbar',
-        },
-      });
-    });
-  </script>
+<!-- Graph for Student Enrollment Trends -->
+<div class="card shadow-sm mt-4">
+    <div class="card-body">
+        <h5 class="mb-3">{{ __('Enrollment Trends (This Year)') }}</h5>
+        <canvas id="enrollmentChart"></canvas>
+    </div>
+</div>
 
+<!-- Recent Payments -->
+<div class="card shadow-sm mt-4">
+    <div class="card-body">
+        <h5 class="mb-3">{{ __('Recent Payments') }}</h5>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{{ __('Student') }}</th>
+                        <th>{{ __('Amount') }}</th>
+                        <th>{{ __('Date') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($recentPayments as $payment)
+                        <tr>
+                            <td>{{ $payment->student->first_name }}</td>
+                            <td>${{ number_format($payment->amount, 2) }}</td>
+                            <td>{{ $payment->created_at->format('d M Y') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @endsection
-
-<style>
-  .swiper-container {
-    position: relative; /* Set position to relative to position buttons inside */
-    width: 100%;
-    /* max-width: 600px; */
-    height: 300px;
-    margin: auto;
-  }
-
-  .swiper-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      var ctx = document.getElementById("enrollmentChart").getContext("2d");
+      var enrollmentChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+              datasets: [{
+                  label: 'Enrollments',
+                  data: {!! json_encode(array_values($months)) !!}, // Fixed data format
+                  backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              scales: {
+                  y: { beginAtZero: true }
+              }
+          }
+      });
+  });
+</script>
