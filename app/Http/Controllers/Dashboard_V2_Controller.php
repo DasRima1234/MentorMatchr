@@ -84,9 +84,15 @@ class Dashboard_V2_Controller extends Controller
             ->groupBy('month')
             ->pluck('total', 'month');
 
+            $courseEnrollmentData = Course::withCount('student')->get();
+            // dd($courseEnrollmentData);
+            $courseNames = $courseEnrollmentData->pluck('course_name')->toArray();
+            $courseCounts = $courseEnrollmentData->pluck('student_count')->toArray();
+            // dd(($courseNames),$courseCounts);
+
         return view('admin.country_dashboard', compact(
             'totalStudents', 'totalTutors', 'totalCourses', 'totalEnrollments', 
-            'totalPayments', 'totalAttendances', 'monthlyEnrollments', 'monthlyRevenue','months','recentPayments'
+            'totalPayments', 'totalAttendances', 'monthlyEnrollments', 'monthlyRevenue','months','courseNames', 'courseCounts','recentPayments'
         ));
     }
 

@@ -83,6 +83,7 @@
     {{-- datatable --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.1/css/buttons.dataTables.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.comiseo.daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.min.css') }}">
