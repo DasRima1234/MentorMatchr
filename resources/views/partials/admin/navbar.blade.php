@@ -56,17 +56,41 @@
                             'project.management',
                             'users',
                             'students.index',
+                            'students.create',
+                            'students.edit',
                             'tutors.index',
+                            'tutors.create',
+                            'tutors.edit',
                             'courses.index',
+                            'courses.create',
+                            'courses.edit',
                             'class_schedules.index',
+                            'class_schedules.create',
+                            'class_schedules.edit',
                             'enrollments.index',
+                            'enrollments.create',
+                            'enrollments.edit',
                             'payments.index',
+                            'payments.create',
+                            'payments.edit',
                             'messages.index',
+                            'messages.create',
+                            'messages.edit',
                             'attendances.index',
+                            'attendances.create',
+                            'attendances.edit',
                             'exams.index',
+                            'exams.create',
+                            'exams.edit',
                             'grades.index',
+                            'grades.create',
+                            'grades.edit',
                             'reports.index',
-                            'student-tutors.index'
+                            'reports.create',
+                            'reports.edit',
+                            'student-tutors.index',
+                            'student-tutors.create',
+                            'student-tutors.edit',
                         ])
                             ? 'show'
                             : '' }}"
@@ -82,81 +106,94 @@
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'users' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ route('users') }}">
-                                                    {{ __('Users Management') }}
+                                                    <i class="fas fa-user"></i>
+                                                    {{ __('Users') }}
                                                 </a>
                                             </li>
                                             {{-- {{dd(Request::route()->getName())}} --}}
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'students.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(),['students.index','students.create']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('students') }}">
-                                                    {{ __('Students Management') }}
+                                                    <i class="fas fa-book-reader"></i>
+                                                    {{ __('Students') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'tutors.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('tutors') }}">
-                                                    {{ __('Tutors Management') }}
+                                                    <i class="fas fa-chalkboard-teacher"></i>
+                                                    {{ __('Tutors') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'student-tutors.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('student-tutors') }}">
-                                                    {{ __('Student-Tutors Management') }}
+                                                    <i class="fas fa-user-graduate"></i>
+                                                    {{ __('Student-Tutors') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'courses.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('courses') }}">
-                                                    {{ __('Course Management') }}
+                                                    <i class="fas fa-book-open"></i>
+                                                    {{ __('Course') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'class_schedules.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('class_schedules') }}">
-                                                    {{ __('Class Management') }}
+                                                    <i class="fas fa-chalkboard"></i>
+                                                    {{ __('Class') }}
                                                 </a>
                                             </li>
                                             
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'enrollments.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('enrollments') }}">
-                                                    {{ __('Enrollment Management') }}
+                                                    <i class="fas fa-user-plus"></i>
+                                                    {{ __('Enrollment') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'attendances.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('attendances') }}">
-                                                    {{ __('Attendance Management') }}
+                                                    <i class="fas fa-calendar-check"></i>
+                                                    {{ __('Attendance') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'exams.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('exams') }}">
-                                                    {{ __('Exam Management') }}
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                    {{ __('Exam') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'grades.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('grades') }}">
-                                                    {{ __('Grade Management') }}
+                                                    <i class="fas fa-chart-line"></i>
+                                                    {{ __('Grade') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'payments.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('payments') }}">
-                                                    {{ __('Payment Management') }}
+                                                    <i class="fas fa-credit-card"></i>
+                                                    {{ __('Payment') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'messages.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('messages') }}">
-                                                    {{ __('Message Management') }}
+                                                    <i class="fas fa-envelope"></i>
+                                                    {{ __('Message') }}
                                                 </a>
                                             </li>
                                             <li
                                                 class="nav-item  {{ Request::route()->getName() == 'reports.index' ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('reports') }}">
-                                                    {{ __('Reports Management') }}
+                                                    <i class="fas fa-file-alt"></i>
+                                                    {{ __('Reports') }}
                                                 </a>
                                             </li>
                                         @endcan

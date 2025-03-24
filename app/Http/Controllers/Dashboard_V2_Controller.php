@@ -27,10 +27,9 @@ class Dashboard_V2_Controller extends Controller
         // Check the user's role
         $userRoles = Auth::user()->getRoleNames();
         // dd($userRoles);
-        
+
         if ($userRoles->contains('Admin') || $userRoles->contains('Owner')) {
             return $this->adminDashboard();
-        
         } elseif ($userRoles->contains('Student')) {
             return $this->studentDashboard();
         } elseif ($userRoles->contains('Tutor')) {
@@ -61,38 +60,57 @@ class Dashboard_V2_Controller extends Controller
         $totalAttendances = Attendance::count();
         $recentPayments = Payment::latest()->take(5)->get(); // Fetch 5 recent payments
 
+        $totalAll = $totalEnrollments + $totalStudents + $totalCourses;
+
         $rawEnrollmentData = Enrollment::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
-        ->whereYear('created_at', now()->year)
-        ->groupBy('month')
-        ->pluck('count', 'month')
-        ->toArray();
+            ->whereYear('created_at', now()->year)
+            ->groupBy('month')
+            ->pluck('count', 'month')
+            ->toArray();
 
         // Ensure all months are included (fill missing months with 0)
         $months = array_fill(1, 12, 0);
         foreach ($rawEnrollmentData as $month => $count) {
             $months[$month] = $count;
         }
-            // ->toArray();
+        // ->toArray();
         // dd($months);
         $monthlyEnrollments = Enrollment::whereYear('created_at', Carbon::now()->year)
             ->selectRaw('MONTH(created_at) as month, COUNT(*) as count')
             ->groupBy('month')
             ->pluck('count', 'month');
 
-        $monthlyRevenue = Payment::whereYear('payment_date', Carbon::now()->year)
+        $monthlyData = Payment::whereYear('payment_date', Carbon::now()->year)
             ->selectRaw('MONTH(payment_date) as month, SUM(amount) as total')
             ->groupBy('month')
-            ->pluck('total', 'month');
+            ->pluck('total', 'month')
+            ->toArray();
 
-            $courseEnrollmentData = Course::withCount('student')->get();
-            // dd($courseEnrollmentData);
-            $courseNames = $courseEnrollmentData->pluck('course_name')->toArray();
-            $courseCounts = $courseEnrollmentData->pluck('student_count')->toArray();
-            // dd(($courseNames),$courseCounts);
+        $monthlyRevenue = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $monthlyRevenue[$i] = $monthlyData[$i] ?? 0;
+        }
+
+        $courseEnrollmentData = Course::withCount('student')->get();
+        // dd($courseEnrollmentData);
+        $courseNames = $courseEnrollmentData->pluck('course_name')->toArray();
+        $courseCounts = $courseEnrollmentData->pluck('student_count')->toArray();
+        // dd(($courseNames),$courseCounts);
 
         return view('admin.country_dashboard', compact(
-            'totalStudents', 'totalTutors', 'totalCourses', 'totalEnrollments', 
-            'totalPayments', 'totalAttendances', 'monthlyEnrollments', 'monthlyRevenue','months','courseNames', 'courseCounts','recentPayments'
+            'totalStudents',
+            'totalTutors',
+            'totalCourses',
+            'totalEnrollments',
+            'totalPayments',
+            'totalAttendances',
+            'monthlyEnrollments',
+            'monthlyRevenue',
+            'months',
+            'courseNames',
+            'courseCounts',
+            'recentPayments',
+            'totalAll'
         ));
     }
 

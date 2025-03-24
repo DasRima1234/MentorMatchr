@@ -32,12 +32,12 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'course_name' => 'required|string|max:255',
+            'course_name' => 'required|string|max:255|unique:courses,course_name',
             'description' => 'nullable|string',
             'duration' => 'required|string',
             'fee' => 'required|numeric|min:0',
             'tutor_id' => 'nullable|exists:tutors,id',
-            'status' => 'required|in:Active,Inactive',
+            'status' => 'Active',
         ]);
 
         Course::create($request->all());
@@ -77,7 +77,7 @@ class CourseController extends Controller
             'duration' => 'required|string',
             'fee' => 'required|numeric|min:0',
             'tutor_id' => 'nullable|exists:tutors,id',
-            'status' => 'required|in:Active,Inactive',
+            // 'status' => 'required|in:Active,Inactive',
         ]);
 
         $course->update($request->all());
@@ -94,5 +94,18 @@ class CourseController extends Controller
         $course->delete();
 
         return redirect()->route('courses.index')->with('success', 'Course deleted successfully!');
+    }
+
+    public function ajaxToggleStatus(Request $request)
+    {
+        // dd(123);
+        $course = Course::findOrFail($request->course_id);
+        $course->status = $course->status === 'Active' ? 'Inactive' : 'Active';
+        $course->save();
+
+        return response()->json([
+            'success' => true,
+            'status' => $course->status
+        ]);
     }
 }

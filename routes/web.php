@@ -77,6 +77,9 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('reports', 'ReportController');
     Route::get('reports/{id}/pdf', ['ReportController', 'generatePDF'])->name('reports.pdf');
     Route::resource('student-tutors', 'StudentTutorController');
+
+    Route::post('/courses/toggle-status', [CourseController::class, 'ajaxToggleStatus'])->name('courses.toggleStatus');
+
 });
 Route::middleware(['auth', 'role:Tutor'])->group(function () {
     Route::resource('attendances', 'AttendanceController');
