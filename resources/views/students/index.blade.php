@@ -52,9 +52,10 @@
                                             <a href="{{ route('students.edit', $student->id) }}" class="edit-icon" title="Edit">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
-                                            <a href="#" class="delete-icon" data-confirm="{{ __('Are You Sure?').'|'.__('This action cannot be undone. Do you want to continue?') }}" data-confirm-yes="document.getElementById('delete-form-{{ $student['id'] }}').submit();">
+                                            <a href="#" class="delete-icon delete-student" data-id="{{ $student->id }}" title="Delete">
                                                 <i class="fas fa-trash"></i>
                                             </a>
+                                            
                                             {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', $student['id']], 'id' => 'delete-form-'.$student['id']]) !!}
                                             {!! Form::close() !!}
                                         </td>
@@ -68,4 +69,27 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-student').forEach(function (button) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const studentId = this.getAttribute('data-id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This action cannot be undone!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('delete-form-' + studentId).submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
 @endsection

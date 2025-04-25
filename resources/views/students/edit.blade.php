@@ -1,181 +1,187 @@
 @extends('layouts.admin')
 
+@section('title')
+    {{ __('Edit Student') }}
+@endsection
+
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <form action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="row">
-                    <!-- Student Name -->
-                    <div class="col-6 form-group">
-                        <label for="first_name" class="form-control-label font-weight-bold">First Name</label>
-                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Enter first name" value="{{ $student->first_name }}" required>
-                    </div>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow p-4 w-100" style="max-width: 1100px; border-radius: 20px;">
+        <h3 class="mb-4 pb-2 border-bottom text-primary fw-bold">{{ __('Student Information') }}</h3>
 
-                    <div class="col-6 form-group">
-                        <label for="middle_name" class="form-control-label font-weight-bold">Middle Name (Optional)</label>
-                        <input type="text" name="middle_name" id="middle_name" class="form-control" placeholder="Enter middle name" value="{{ $student->middle_name }}">
-                    </div>
+        <form action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">First Name</label>
+                    <input type="text" name="first_name" class="form-control inputTextBox @error('first_name') is-invalid @enderror" placeholder="Enter first name" value="{{ old('first_name', $student->first_name) }}">
+                    @error('first_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
 
-                    <div class="col-6 form-group">
-                        <label for="last_name" class="form-control-label font-weight-bold">Last Name</label>
-                        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Enter last name" value="{{ $student->last_name }}" required>
-                    </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Middle Name (Optional)</label>
+                    <input type="text" name="middle_name" class="form-control inputTextBox" placeholder="Enter middle name" value="{{ old('middle_name', $student->middle_name) }}">
+                </div>
 
-                    <!-- Email Address -->
-                    <div class="col-6 form-group">
-                        <label for="email" class="form-control-label font-weight-bold">Email Address</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="Enter email address" value="{{ $student->email }}" required>
-                    </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Last Name</label>
+                    <input type="text" name="last_name" class="form-control inputTextBox @error('last_name') is-invalid @enderror" placeholder="Enter last name" value="{{ old('last_name', $student->last_name) }}">
+                    @error('last_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
 
-                    <!-- City -->
-                    <div class="col-6 form-group">
-                        <label for="city" class="form-control-label font-weight-bold">City</label>
-                        <input type="text" name="city" id="city" class="form-control" placeholder="Enter city" value="{{ $student->city }}" required>
-                    </div>
-
-                    <!-- State -->
-                    <div class="col-6 form-group">
-                        <label for="state" class="form-control-label font-weight-bold">State/Province</label>
-                        <input type="text" name="state" id="state" class="form-control" placeholder="Enter state or province" value="{{ $student->state }}" required>
-                    </div>
-
-                    <!-- Country -->
-                    <div class="col-6 form-group">
-                        <label for="country" class="form-control-label font-weight-bold">Country</label>
-                        <input type="text" name="country" id="country" class="form-control" placeholder="Enter country" value="{{ $student->country }}" required>
-                    </div>
-
-                    <!-- Pincode -->
-                    <div class="col-6 form-group">
-                        <label for="pincode" class="form-control-label font-weight-bold">Pincode</label>
-                        <input type="text" name="pincode" id="pincode" class="form-control" placeholder="Enter pincode" value="{{ $student->pincode }}" required>
-                    </div>
-
-                    <!-- Phone Number -->
-                    <div class="col-6 form-group">
-                        <label for="phone" class="form-control-label font-weight-bold">Phone Number</label>
-                        <input type="tel" name="phone" id="phone" class="form-control" placeholder="Enter phone number" value="{{ $student->phone }}" required>
-                    </div>
-
-                    <!-- Guardian Details -->
-                    <div class="col-6 form-group">
-                        <label for="guardian_name" class="form-control-label font-weight-bold">Guardian Name</label>
-                        <input type="text" name="guardian_name" id="guardian_name" class="form-control" placeholder="Enter guardian's name" value="{{ $student->guardian_name }}" required>
-                    </div>
-
-                    <div class="col-6 form-group">
-                        <label for="guardian_phone" class="form-control-label font-weight-bold">Guardian Phone Number</label>
-                        <input type="tel" name="guardian_phone" id="guardian_phone" class="form-control" placeholder="Enter guardian's phone number" value="{{ $student->guardian_phone }}" required>
-                    </div>
-
-                    <!-- Date of Birth -->
-                    <div class="col-6 form-group">
-                        <label for="dob" class="form-control-label font-weight-bold">Date of Birth</label>
-                        <input type="date" name="dob" id="dob" class="form-control" value="{{ $student->dob }}" required>
-                    </div>
-
-                    <!-- Gender -->
-                    <div class="col-6 form-group">
-                        <label for="gender" class="form-control-label font-weight-bold">Gender</label>
-                        <select name="gender" id="gender" class="form-control" required>
-                            <option value="">Select Gender</option>
-                            <option value="Male" {{ $student->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                            <option value="Female" {{ $student->gender == 'Female' ? 'selected' : '' }}>Female</option>
-                            <option value="Other" {{ $student->gender == 'Other' ? 'selected' : '' }}>Other</option>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Email Address</label>
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter email address" value="{{ old('email', $student->email) }}">
+                    @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Phone Number</label>
+                    <input type="text" name="phone" class="form-control mobileNumber @error('phone') is-invalid @enderror" placeholder="Enter phone number" value="{{ old('phone', $student->phone) }}">
+                    @error('phone')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Date of Birth</label>
+                    <input type="date" name="dob" class="form-control @error('dob') is-invalid @enderror" value="{{ old('dob', $student->dob) }}">
+                    @error('dob')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Gender</label>
+                    <select name="gender" class="form-control select2 @error('gender') is-invalid @enderror">
+                        <option value="">Select Gender</option>
+                        <option value="Male" {{ old('gender', $student->gender) == 'Male' ? 'selected' : '' }}>Male</option>
+                        <option value="Female" {{ old('gender', $student->gender) == 'Female' ? 'selected' : '' }}>Female</option>
+                        <option value="Other" {{ old('gender', $student->gender) == 'Other' ? 'selected' : '' }}>Other</option>
+                    </select>
+                    @error('gender')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">City</label>
+                    <input type="text" name="city" class="form-control inputTextBox @error('city') is-invalid @enderror" placeholder="Enter city" value="{{ old('city', $student->city) }}">
+                    @error('city')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">State</label>
+                    <input type="text" name="state" class="form-control inputTextBox @error('state') is-invalid @enderror" placeholder="Enter state" value="{{ old('state', $student->state) }}">
+                    @error('state')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="country" class="form-label">Country</label>
+                        <select name="country" id="country" class="form-control select2">
+                            {!! \App\Helper\HelperFacades::getCountryDropdown($student->country) !!}
                         </select>
-                    </div>
-
-
-                    <div class="col-6 form-group">
-                        <label for="address" class="form-control-label font-weight-bold">Address</label>
-                        <textarea name="address" id="address" rows="3" class="form-control" placeholder="Enter address" required>{{ $student->address }}</textarea>
-                    </div>
-
-
-                    <div class="col-6 form-group">
-                        <label for="education_level" class="form-control-label font-weight-bold">Current Level of Education</label>
-                        <select name="education_level" id="education_level" class="form-control" required>
-                            <option value="">Select Education Level</option>
-                            <option value="High School" {{ $student->education_level == 'High School' ? 'selected' : '' }}>High School</option>
-                            <option value="Undergraduate" {{ $student->education_level == 'Undergraduate' ? 'selected' : '' }}>Undergraduate</option>
-                            <option value="Graduate" {{ $student->education_level == 'Graduate' ? 'selected' : '' }}>Graduate</option>
-                            <option value="Postgraduate" {{ $student->education_level == 'Postgraduate' ? 'selected' : '' }}>Postgraduate</option>
-                        </select>
-                    </div>
-
-                    <div class="col-6 form-group">
-                        <label for="subjects" class="form-control-label font-weight-bold">Subjects Interested In</label>
-                        <select name="subjects[]" id="subjects" class="form-control searchable_dropdown_box" multiple="multiple">
-                            @foreach (['Mathematics', 'Science', 'History', 'English', 'Art', 'Music', 'Computer Science'] as $subject)
-                                <option value="{{ $subject }}" 
-                                    {{ in_array($subject, $selectedSubjects) ? 'selected' : '' }}>
-                                    {{ $subject }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    
-                    <div class="col-6 form-group">
-                        <label for="school_name" class="form-control-label font-weight-bold">School Name</label>
-                        <input type="text" name="school_name" id="school_name" class="form-control" value="{{ $student->school_name }}" required>
-                    </div>
-
-                    <div class="col-lg-6 col-md-6">
-                        <div class="form-group">
-                            <div class="choose-file">
-                                <label for="achievements">
-                                    <div>{{ __('Achievements') }}</div>
-                                    <input 
-                                        class="form-control" 
-                                        name="achievements[]" 
-                                        type="file" 
-                                        id="achievements" 
-                                        accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" 
-                                        data-filename="profile_update" 
-                                        multiple value="{{ old('achievements[]') }}" required>
-                                </label>
-                                <p class="achievements"></p>
-                            </div>
-                            @error('achievements')
-                            <span class="invalid-feedback text-danger text-xs" role="alert">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div id="file-names" class="mt-5">
-                            @if($student->achievements && count(json_decode($student->achievements)) > 0)
-                                <ul>
-                                    @foreach(json_decode($student->achievements) as $file)
-                                        <li>{{ basename($file) }}</li>
-                                    @endforeach
-                                </ul>
-                            @endif
-                        </div>
-                        <span class="clearfix"></span>
-                        <span class="text-xs text-muted">{{ __('Please upload valid files. Only JPG, PNG, PDF, DOC, and DOCX are allowed. Each file must not exceed 5MB.') }}</span>                  
-                    </div>
-    
-
-                    <div class="col-6 form-group">
-                        <label for="resources" class="form-control-label font-weight-bold">Resources Available</label>
-                        <input type="text" name="resources" id="resources" class="form-control" value="{{ $student->resources }}" required>
-                    </div>
-
-                    <div class="col-6 form-group">
-                        <label for="skills" class="form-control-label font-weight-bold">Skills</label>
-                        <textarea name="skills" id="skills" rows="3" class="form-control" required>{{ $student->skills }}</textarea>
-                    </div>
-
-                    <div class="col-6 form-group">
-                        <label for="interests" class="form-control-label font-weight-bold">Interests</label>
-                        <textarea name="interests" id="interests" rows="3" class="form-control" required>{{ $student->interests }}</textarea>
-                    </div>
-
-                    <div class="form-group col-12 text-right mt-4">
-                        <button type="submit" class="btn btn-primary">Update Student</button>
+                        @error('country')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                 </div>
-            </form>
-        </div>
+
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Pincode</label>
+                    <input type="text" name="pincode" class="form-control @error('pincode') is-invalid @enderror" placeholder="Enter pincode" value="{{ old('pincode', $student->pincode) }}">
+                    @error('pincode')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Guardian Name</label>
+                    <input type="text" name="guardian_name" class="form-control inputTextBox @error('guardian_name') is-invalid @enderror" placeholder="Enter guardian name" value="{{ old('guardian_name', $student->guardian_name) }}">
+                    @error('guardian_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Guardian Phone</label>
+                    <input type="text" name="guardian_phone" class="form-control mobileNumber @error('guardian_phone') is-invalid @enderror" placeholder="Enter guardian phone" value="{{ old('guardian_phone', $student->guardian_phone) }}">
+                    @error('guardian_phone')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Current Education Level</label>
+                    <select name="education_level" class="form-control select2 @error('education_level') is-invalid @enderror">
+                        <option value="">Select Level</option>
+                        @for ($i = 1; $i <= 12; $i++)
+                            <option value="Class {{ $i }}" {{ old('education_level', $student->education_level) == "Class $i" ? 'selected' : '' }}>
+                                Class {{ $i }}
+                            </option>
+                        @endfor
+                        <option value="High School" {{ old('education_level', $student->education_level) == 'High School' ? 'selected' : '' }}>High School</option>
+                        <option value="Undergraduate" {{ old('education_level', $student->education_level) == 'Undergraduate' ? 'selected' : '' }}>Undergraduate</option>
+                        <option value="Graduate" {{ old('education_level', $student->education_level) == 'Graduate' ? 'selected' : '' }}>Graduate</option>
+                        <option value="Postgraduate" {{ old('education_level', $student->education_level) == 'Postgraduate' ? 'selected' : '' }}>Postgraduate</option>
+                    </select>
+                    @error('education_level')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">School Name</label>
+                    <input type="text" name="school_name" class="form-control inputTextBox @error('school_name') is-invalid @enderror" placeholder="Enter school name" value="{{ old('school_name', $student->school_name) }}">
+                    @error('school_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-3 mt-4">
+                    <button type="submit" class="btn btn-primary px-4 py-2 fw-bold">{{ __('Update Student') }}</button>
+                    <a href="{{ route('students.index') }}" class="btn btn-outline-secondary px-4 py-2 fw-bold">{{ __('Cancel') }}</a>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+
+    $(".inputTextBox").on("keypress keyup blur change", function(event) {
+        var regex = new RegExp("^[a-zA-Z ]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        $(this).val($(this).val().replace(/[^a-zA-Z \.]/g, ""));
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+    $(".mobileNumber").on("keypress keyup blur change", function(event) {
+        var regex = /^[\\d+ ]*$/;
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        $(this).val($(this).val().replace(/[^\\d+ ]/g, ""));
+        if (!regex.test($(this).val())) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+    $('input[name="city"]').blur(function () {
+        let city = $(this).val().trim();
+        let country = $('select[name="country"]').val();
+        let stateInput = $('input[name="state"]'); // Now it's an input box
+
+        if (city && country) {
+            $.ajax({
+                url: `https://nominatim.openstreetmap.org/search?q=${city},${country}&format=json&limit=1`,
+                type: "GET",
+                success: function (response) {
+                    if (response.length > 0) {
+                        let displayName = response[0].display_name.split(", ");
+                        let state = displayName.length > 1 ? displayName[displayName.length - 2] : "";
+                        stateInput.val(state); // Fill the input box
+                    } else {
+                        stateInput.val("State not found");
+                    }
+                },
+                error: function () {
+                    console.log("Error fetching state data");
+                    stateInput.val("Error fetching state");
+                }
+            });
+        }
+    });
+
+
+</script>
 @endsection

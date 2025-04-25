@@ -112,35 +112,35 @@
                                             </li>
                                             {{-- {{dd(Request::route()->getName())}} --}}
                                             <li
-                                                class="nav-item  {{ in_array(Request::route()->getName(),['students.index','students.create']) ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(),['students.index','students.create','students.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('students') }}">
                                                     <i class="fas fa-book-reader"></i>
                                                     {{ __('Students') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'tutors.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(),['tutors.index','tutors.create','tutors.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('tutors') }}">
                                                     <i class="fas fa-chalkboard-teacher"></i>
                                                     {{ __('Tutors') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'student-tutors.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(),['student-tutors.index','student-tutors.create','student-tutors.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('student-tutors') }}">
                                                     <i class="fas fa-user-graduate"></i>
                                                     {{ __('Student-Tutors') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'courses.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(),['courses.index','courses.create','courses.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('courses') }}">
                                                     <i class="fas fa-book-open"></i>
                                                     {{ __('Course') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'class_schedules.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(), ['class_schedules.index','class_schedules.create','class_schedules.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('class_schedules') }}">
                                                     <i class="fas fa-chalkboard"></i>
                                                     {{ __('Class') }}
@@ -148,49 +148,49 @@
                                             </li>
                                             
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'enrollments.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(), ['enrollments.index','enrollments.create','enrollments.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('enrollments') }}">
                                                     <i class="fas fa-user-plus"></i>
                                                     {{ __('Enrollment') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'attendances.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(), ['attendances.index','attendances.create','attendances.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('attendances') }}">
                                                     <i class="fas fa-calendar-check"></i>
                                                     {{ __('Attendance') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'exams.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(), ['exams.index','exams.create','exams.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('exams') }}">
                                                     <i class="fas fa-pencil-alt"></i>
                                                     {{ __('Exam') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'grades.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(), ['grades.index','grades.create','grades.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('grades') }}">
                                                     <i class="fas fa-chart-line"></i>
                                                     {{ __('Grade') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'payments.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(), ['payments.index','payments.create','payments.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('payments') }}">
                                                     <i class="fas fa-credit-card"></i>
                                                     {{ __('Payment') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'messages.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(), ['messages.index','messages.create','messages.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('messages') }}">
                                                     <i class="fas fa-envelope"></i>
                                                     {{ __('Message') }}
                                                 </a>
                                             </li>
                                             <li
-                                                class="nav-item  {{ Request::route()->getName() == 'reports.index' ? 'active' : '' }}">
+                                                class="nav-item  {{ in_array(Request::route()->getName(), ['reports.index','reports.create','reports.edit']) ? 'active' : '' }}">
                                                 <a class="nav-link" href="{{ url('reports') }}">
                                                     <i class="fas fa-file-alt"></i>
                                                     {{ __('Reports') }}

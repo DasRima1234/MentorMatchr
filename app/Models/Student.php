@@ -56,7 +56,12 @@ class Student extends Model
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'enrollments');
+        return $this->belongsToMany(Course::class, 'student_tutor', 'student_id', 'course_id')->withTimestamps();
+    }
+
+    public function enrollments()
+    {
+        return $this->belongsToMany(Enrollment::class, 'enrollments');
     }
 
     

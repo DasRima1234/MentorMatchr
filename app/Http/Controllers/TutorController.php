@@ -41,21 +41,21 @@ class TutorController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:tutors,email',
-            'phone' => 'nullable|string|max:20',
-            'gender' => 'nullable|in:Male,Female,Other',
-            'dob' => 'nullable|date',
-            'qualification' => 'nullable|string|max:255',
+            'phone' => 'required|nullable|string|max:20',
+            'gender' => 'required|nullable|in:Male,Female,Other',
+            'dob' => 'required|nullable|date',
+            'qualification' => 'required|nullable|string|max:255',
             'subject_specialization' => 'required|string',
             'experience' => 'required|integer|min:0',
             'bio' => 'nullable|string',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:Active,Inactive,Pending',
-            'hourly_rate' => 'nullable|numeric|min:0',
+            'hourly_rate' => 'required|nullable|numeric|min:0',
             'availability' => 'nullable|json',
-            'address' => 'nullable|string',
-            'city' => 'nullable|string|max:100',
-            'state' => 'nullable|string|max:100',
-            'country' => 'nullable|string|max:100',
+            'address' => 'required|nullable|string',
+            'city' => 'required|nullable|string|max:100',
+            'state' => 'required|nullable|string|max:100',
+            'country' => 'required|nullable|string|max:100',
         ]);
 
         // Handle profile picture upload
@@ -106,24 +106,24 @@ class TutorController extends Controller
         // Validate input
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:tutors,email,' . $tutor->id,
-            'phone' => 'nullable|string|max:20',
-            'gender' => 'nullable|in:Male,Female,Other',
-            'dob' => 'nullable|date',
-            'qualification' => 'nullable|string|max:255',
+            'email' => 'required|email|unique:tutors,email,'. $id,
+            'phone' => 'required|nullable|string|max:20',
+            'gender' => 'required|nullable|in:Male,Female,Other',
+            'dob' => 'required|nullable|date',
+            'qualification' => 'required|nullable|string|max:255',
             'subject_specialization' => 'required|string',
             'experience' => 'required|integer|min:0',
-            'bio' => 'nullable|string',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'bio' => 'nullable|string',
+            // 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:Active,Inactive,Pending',
-            'hourly_rate' => 'nullable|numeric|min:0',
-            'availability' => 'nullable|json',
-            'address' => 'nullable|string',
-            'city' => 'nullable|string|max:100',
-            'state' => 'nullable|string|max:100',
-            'country' => 'nullable|string|max:100',
+            'hourly_rate' => 'required|nullable|numeric|min:0',
+            // 'availability' => 'required|nullable|json',
+            'city' => 'required|nullable|string|max:100',
+            'state' => 'required|nullable|string|max:100',
+            'country' => 'required|nullable',
         ]);
 
+        // dd(353534);
         // Handle profile picture update
         if ($request->hasFile('profile_picture')) {
             $filePath = $request->file('profile_picture')->store('tutors', 'public');
